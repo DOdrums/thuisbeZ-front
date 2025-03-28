@@ -1,4 +1,12 @@
 import type { MetaFunction } from "@remix-run/node";
+import { json } from "@remix-run/node";
+import { useLoaderData } from "@remix-run/react";
+
+export const loader = async () => {
+  const res = await fetch("http://localhost:3000/restaurants/all"); // Adjust API URL
+  const data = await res.json();
+  return json(data);
+};
 
 export const meta: MetaFunction = () => {
   return [
@@ -8,5 +16,16 @@ export const meta: MetaFunction = () => {
 };
 
 export default function Index() {
-  return <h1>Welcome to ThuisbeZ!</h1>;
+  const restaurants = useLoaderData<typeof loader>();
+
+  return (
+      <div>
+        <h1>Restaurants</h1>
+        <ul>
+          {restaurants.map((restaurant: any) => (
+              <li key={restaurant.id}>{restaurant.name}</li>
+          ))}
+        </ul>
+      </div>
+  );
 }
