@@ -2,10 +2,14 @@ import type { MetaFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import {
-    ResizableHandle,
-    ResizablePanel,
-    ResizablePanelGroup,
-} from x"~/components/ui/resizable"
+    Card,
+    CardContent,
+    CardDescription,
+    CardFooter,
+    CardHeader,
+    CardTitle,
+} from "~/components/ui/card"
+
 
 export const loader = async () => {
   const res = await fetch("http://localhost:3000/restaurants/all"); // Adjust API URL
@@ -24,13 +28,18 @@ export default function Index() {
   const restaurants = useLoaderData<typeof loader>();
 
   return (
-      <div>
-        <h1>Restaurants</h1>
-        <ul>
+      <div className="grid grid-cols-4 gap-4">
+          <h1>Restaurants</h1>
           {restaurants.map((restaurant: any) => (
-              <li key={restaurant.id}>{restaurant.name}</li>
+              <Card>
+                  <CardHeader>
+                      <CardTitle>{restaurant.name}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                      {restaurant.cuisine}
+                  </CardContent>
+              </Card>
           ))}
-        </ul>
       </div>
   );
 }
