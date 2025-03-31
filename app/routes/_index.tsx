@@ -28,8 +28,9 @@ export default function Index() {
   const restaurants = useLoaderData<typeof loader>();
 
   return (
-      <div className="grid grid-cols-4 gap-4">
-          <h1>Restaurants</h1>
+      <div className="m-5">
+          <h1 className="m-5">ThuisbeZ</h1>
+          <div className="grid grid-cols-4 gap-4">
           {restaurants.map((restaurant: any) => (
               <Card>
                   <CardHeader>
@@ -40,6 +41,7 @@ export default function Index() {
                   </CardContent>
               </Card>
           ))}
+          </div>
       </div>
   );
 }
